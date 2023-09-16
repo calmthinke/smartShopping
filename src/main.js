@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import '@/utils/vant-ui'
+import '@/utils/vant-ui'// 导入vant组件
+import '@/styles/common.less'// 导入公共的样式
+
 // 1. vant 组件的全部导入
 // import Vant from 'vant'
 // import 'vant/lib/index.css'
