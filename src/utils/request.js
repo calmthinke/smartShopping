@@ -15,6 +15,14 @@ const instance = axios.create({
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
+  // 开启loading,禁止背景点击(节流处理,防止多次无效触发)
+  Toast.loading({
+    message: '加载中...',
+    forbidClick: true, // 禁止背景点击
+    loadingType: 'spinner', // 配置loading图标
+    duration: 0// 不会自动消失(当请求回来后,再关闭)
+  })
+
   return config
 }, function (error) {
   // 对请求错误做些什么
@@ -27,10 +35,16 @@ instance.interceptors.response.use(function (response) {
   // 对响应数据做点什么(默认axios会多包一层data,需要响应拦截器中处理一下)
   const res = response.data
   if (res.status !== 200) {
+    // 问题:
+    // 为什么错误情况不清除loading效果----因为 Toast默认单例模式,后面的Toast调用了,会将前一个Toast效果隐藏,
+    // 同时只能存在一个toast
     // 给提示
     Toast(res.message)
     // 抛出错误的promise
     return Promise.reject(res.message)
+  } else {
+    // 正确情况,清除loading效果
+    Toast.clear()
   }
   return res
 }, function (error) {

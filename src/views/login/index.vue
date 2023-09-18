@@ -121,6 +121,8 @@ export default {
         return
       }
       const res = await codeLogin(this.mobile, this.smsCode)
+      this.$store.commit('user/setUserInfo', res.data)
+      console.log('登录请求')
       Toast(res.message)
       this.$router.push('/')
       // 失败的逻辑,进行拦截统一处理,在页面中只考虑成功的逻辑
