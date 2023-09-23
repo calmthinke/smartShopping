@@ -22,7 +22,21 @@ export default {
 
   },
   // 提供异步方法
-  actions: {},
+  actions: {
+    logout (context) {
+      // 个人信息重置
+      context.commit('setUserInfo', {})
+      // 购物车重置
+      // 问题:跨模块 调用mutation
+      context.commit(
+        'cart/setCartList',
+        [],
+        {
+          root: true
+        }
+      )
+    }
+  },
   // 提供属性
   getters: {}
 

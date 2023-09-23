@@ -14,6 +14,7 @@ import Home from '@/views/layout/home.vue'
 import Cart from '@/views/layout/cart.vue'
 import Category from '@/views/layout/category.vue'
 import User from '@/views/layout/user.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 // 路由规则,数组里面包对象
@@ -43,5 +44,40 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+// 所有的路由在被真正访问到之前(解析渲染对应的组件页面之前),都先经过全局前置守卫
+// 只有全局前置守卫放行了,才能到达对应的页面
 
+// 全局前置导航守卫
+// to: 到哪去,到哪去的完整的路由信息对象(路径,参数)
+// from: 从哪来,从哪来的完整的路由信息对象(路径,参数)
+// next():是否放行
+// 1.next() 直接放行,放行到to要去的路径
+// 2.next(路径) 进行拦截,拦截到next里面配置的路径
+
+// 定义权限访问的页面
+const authUrl = ['/pay', '/myorder']
+router.beforeEach((to, from, next) => {
+  const token = store.state.user.userInfo.token
+  if (!authUrl.includes(to.path)) {
+    // 非权限页面,直接放行
+    next()
+    // return
+  } else {
+    // 权限页面,判断token
+  // 问题:
+  // 为什么这样写不对
+
+    // if (token !== null) {
+    //   next()
+    // } else {
+    //   next('/login')
+    // }
+
+    if (token) {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+})
 export default router

@@ -18,3 +18,18 @@ export const setInfo = (obj) => {
 export const removeInfo = () => {
   localStorage.removeItem(INFO_KEY)
 }
+
+// -----------------------------------------------------------------------------------
+
+// 约定通用的键名
+const HISTORY_KEY = 'my_search_history'
+
+// 获取搜索历史
+export const getHistory = () => {
+  const history = []
+  return localStorage.getItem(HISTORY_KEY) ? JSON.parse(localStorage.getItem(HISTORY_KEY)) : history
+}
+// 设置搜索历史
+export const setHistory = (history) => {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history))
+}

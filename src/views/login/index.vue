@@ -122,9 +122,17 @@ export default {
       }
       const res = await codeLogin(this.mobile, this.smsCode)
       this.$store.commit('user/setUserInfo', res.data)
-      console.log('登录请求')
-      Toast(res.message)
-      this.$router.push('/')
+      Toast('登录成功')
+      // ---------------------------------------------------------
+      // 判断有无回跳地址
+      // 有:去回跳页面
+      // 没有:正常去首页
+
+      const url = this.$route.query.backUrl || '/'
+      // this.$router.push(url)
+      this.$router.replace(url)
+
+      // ----------------------------------------------------------
       // 失败的逻辑,进行拦截统一处理,在页面中只考虑成功的逻辑
       // if (res.status === 200) {
       //   this.$router.push('/')
