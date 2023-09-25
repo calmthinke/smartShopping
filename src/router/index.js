@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-// 导入一级路由组件
-import Login from '@/views/login/index.vue'
-import Layout from '@/views/layout/index.vue'
-import Search from '@/views/search'
-import Pay from '@/views/pay/index.vue'
-import MyOrder from '@/views/myorder'
-import ProDetail from '@/views/prodetail'
-import SearchList from '@/views/search/list'
 // 导入二级路由组件
 import Home from '@/views/layout/home.vue'
 import Cart from '@/views/layout/cart.vue'
 import Category from '@/views/layout/category.vue'
 import User from '@/views/layout/user.vue'
 import store from '@/store'
+
+// 导入一级路由组件
+const Login = () => import('@/views/login/index.vue')
+const Layout = () => import('@/views/layout/index.vue')
+const Search = () => import('@/views/search')
+const Pay = () => import('@/views/pay/index.vue')
+const MyOrder = () => import('@/views/myorder')
+const ProDetail = () => import('@/views/prodetail')
+const SearchList = () => import('@/views/search/list')
 
 Vue.use(VueRouter)
 // 路由规则,数组里面包对象
